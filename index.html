@@ -10,7 +10,7 @@
 
     <h1>Tennis Court Scheduler</h1>
 
-    <h2>Add Court Schedule</h2>
+    <h2>Add Practice or Match</h2>
 
     <label>Team:</label>
     <select id="teamSelect"></select>
@@ -18,16 +18,19 @@
     <label>Court:</label>
     <select id="courtSelect"></select>
 
+    <label>Date:</label>
+    <input id="dateInput" type="date">
+
     <label>Start Time:</label>
     <input id="startTime" type="text" placeholder="5:30 PM">
 
     <label>End Time:</label>
     <input id="endTime" type="text" placeholder="6:45 PM">
 
-    <button onclick="addSchedule()">Save Schedule</button>
+    <button onclick="addSchedule()">Save</button>
 
-    <h2>All Court Schedules</h2>
-    <div id="scheduleChart"></div>
+    <h2>Calendar Schedule</h2>
+    <div id="calendar"></div>
 
     <h2>Saved Entries</h2>
     <div id="savedList"></div>

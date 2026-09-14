@@ -78,17 +78,18 @@ function loadDropdowns() {
 function addSchedule() {
     const teamId = document.getElementById("teamSelect").value;
     const courtId = document.getElementById("courtSelect").value;
+    const date = document.getElementById("dateInput").value;
     const start = document.getElementById("startTime").value;
     const end = document.getElementById("endTime").value;
 
     const teamName = teams.find(t => t.id == teamId).name;
     const courtName = courts.find(c => c.id == courtId).name;
 
-    schedules.push({ teamName, courtName, start, end });
+    schedules.push({ teamName, courtName, date, start, end });
 
     localStorage.setItem("schedules", JSON.stringify(schedules));
 
-    renderScheduleChart();
+    renderCalendar();
     renderSavedList();
 }
 
@@ -98,7 +99,7 @@ function addSchedule() {
 function deleteSchedule(index) {
     schedules.splice(index, 1);
     localStorage.setItem("schedules", JSON.stringify(schedules));
-    renderScheduleChart();
+    renderCalendar();
     renderSavedList();
 }
 
@@ -114,13 +115,14 @@ function editSchedule(index) {
     document.getElementById("courtSelect").value =
         courts.find(c => c.name === s.courtName).id;
 
+    document.getElementById("dateInput").value = s.date;
     document.getElementById("startTime").value = s.start;
     document.getElementById("endTime").value = s.end;
 
     schedules.splice(index, 1);
     localStorage.setItem("schedules", JSON.stringify(schedules));
 
-    renderScheduleChart();
+    renderCalendar();
     renderSavedList();
 }
 
@@ -134,7 +136,7 @@ function renderSavedList() {
     schedules.forEach((s, index) => {
         list.innerHTML += `
             <div>
-                ${s.teamName} at ${s.courtName} from ${s.start} to ${s.end}
+                ${s.date}: ${s.teamName} at ${s.courtName} from ${s.start} to ${s.end}
                 <button onclick="deleteSchedule(${index})">Delete</button>
                 <button onclick="editSchedule(${index})">Edit</button>
             </div>
@@ -143,35 +145,35 @@ function renderSavedList() {
 }
 
 // ----------------------
-// RENDER SCHEDULE CHART
+// RENDER CALENDAR VIEW
 // ----------------------
-function renderScheduleChart() {
-    const chart = document.getElementById("scheduleChart");
-    chart.innerHTML = "";
+function renderCalendar() {
+    const calendar = document.getElementById("calendar");
+    calendar.innerHTML = "";
 
-    const courtsList = [...new Set(schedules.map(s => s.courtName))];
+    const dates = [...new Set(schedules.map(s => s.date))].sort();
 
-    let html = "<table><tr><th>Court</th><th>Schedule</th></tr>";
+    let html = "<table><tr><th>Date</th><th>Schedule</th></tr>";
 
-    courtsList.forEach(court => {
-        html += `<tr><td>${court}</td><td>`;
+    dates.forEach(date => {
+        html += `<tr><td>${date}</td><td>`;
 
         schedules
-            .filter(s => s.courtName === court)
+            .filter(s => s.date === date)
             .forEach(s => {
-                html += `${s.teamName}: ${s.start} - ${s.end}<br>`;
+                html += `${s.teamName} at ${s.courtName}: ${s.start} - ${s.end}<br>`;
             });
 
         html += "</td></tr>";
     });
 
     html += "</table>";
-    chart.innerHTML = html;
+    calendar.innerHTML = html;
 }
 
 // ----------------------
 // INIT PAGE
 // ----------------------
 loadDropdowns();
-renderScheduleChart();
+renderCalendar();
 renderSavedList();
