@@ -6,16 +6,21 @@
 // ----------------------
 
 const teams = [
-    { id: 1, name: "Farmington Aces" },
-    { id: 2, name: "Kaysville Smashers" },
-    { id: 3, name: "Layton Lightning" },
-    // Add up to 20 teams
+    { id: 1, name: "Bountiful/Viewmont MS Boys" },
+    { id: 2, name: "Farmington MS Boys" },
+    { id: 3, name: "Davis/Layton MS Boys" },
+    { id: 4, name: "Northridge/CF/SY MS Boys" },
+    { id: 5, name: "Bountiful MS Girls" },
+    { id: 6, name: "Viewmont MS Girls" },
+    { id: 7, name: "Farmington MS Girls" },
+    { id: 8, name: "Davis/Layton MS Girls" },
+    { id: 9, name: "Northridge/CF/SY MS Girls" }
 ];
 
 const courts = [
-    { id: 1, name: "Farmington Court A", location: "Farmington", open: "08:00", close: "22:00" },
-    { id: 2, name: "Farmington Court B", location: "Farmington", open: "08:00", close: "22:00" },
-    { id: 3, name: "Kaysville Rec Court 1", location: "Kaysville", open: "07:00", close: "21:00" },
+    { id: 1, name: "Farmington High School", location: "Farmington", open: "08:00", close: "22:00" },
+    { id: 2, name: "West Muller Park", location: "Bountiful", open: "08:00", close: "22:00" },
+    { id: 3, name: "Davis High School", location: "Kaysville", open: "07:00", close: "21:00" },
     // Add up to 20 courts
 ];
 
