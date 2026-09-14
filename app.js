@@ -14,17 +14,46 @@ const teams = [
     { id: 6, name: "Viewmont MS Girls" },
     { id: 7, name: "Farmington MS Girls" },
     { id: 8, name: "Davis/Layton MS Girls" },
-    { id: 9, name: "Northridge/CF/SY MS Girls" }
+    { id: 9, name: "Northridge/CF/SY MS Girls" },
+
+    { id: 10, name: "Bountiful Orange" },
+    { id: 11, name: "Farmington/Centerville Orange" },
+    { id: 12, name: "Kaysville Orange" },
+    { id: 13, name: "Layton Orange" },
+    { id: 14, name: "Clearfield Orange" },
+    { id: 15, name: "North Ogden Orange" },
+    { id: 16, name: "Pleasant View Orange" },
+
+    { id: 17, name: "Centerville/Farmington/BO HS" },
+    { id: 18, name: "Kaysville/Layton HS" },
+    { id: 19, name: "Weber HS" },
+    { id: 20, name: "Fremont HS" }
 ];
+
+
 
 const courts = [
-    { id: 1, name: "Farmington High School", location: "Farmington", open: "08:00", close: "22:00" },
-    { id: 2, name: "West Muller Park", location: "Bountiful", open: "08:00", close: "22:00" },
-    { id: 3, name: "Davis High School", location: "Kaysville", open: "07:00", close: "21:00" },
-    // Add up to 20 courts
+    // High Schools → 5pm–8pm
+    { id: 1, name: "Farmington High School", location: "Farmington", open: "5:30 PM", close: "8:00 PM" },
+    { id: 3, name: "Davis High School", location: "Kaysville", open: "5:00 PM", close: "8:00 PM" },
+    { id: 4, name: "Viewmont High School", location: "Bountiful", open: "5:00 PM", close: "8:00 PM" },
+    { id: 5, name: "Northridge High School", location: "Layton", open: "5:00 PM", close: "8:00 PM" },
+    { id: 6, name: "Ogden High School", location: "Ogden", open: "5:00 PM", close: "8:00 PM" },
+    { id: 8, name: "Fremont High School", location: "Plain City", open: "5:00 PM", close: "8:00 PM" },
+    { id: 9, name: "Syracuse High School", location: "Syracuse", open: "5:00 PM", close: "8:00 PM" },
+    { id: 10, name: "Clearfield High School", location: "Clearfield", open: "5:00 PM", close: "8:00 PM" },
+    { id: 11, name: "Weber High School", location: "Pleasant View", open: "5:00 PM", close: "8:00 PM" },
+
+    // Parks → keep normal hours
+    { id: 2, name: "West Muller Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" },
+    { id: 7, name: "North Ogden Park", location: "North Ogden", open: "08:00 AM", close: "10:00 PM" },
+    { id: 12, name: "Five Points Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" },
+    { id: 13, name: "Ranches Park", location: "Farmington", open: "08:00 AM", close: "10:00 PM" },
+    { id: 14, name: "Chapel Park", location: "Layton", open: "08:00 AM", close: "10:00 PM" },
+    { id: 15, name: "Fire House Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" }
 ];
 
-let bookings = [];
+
 
 
 // ----------------------
