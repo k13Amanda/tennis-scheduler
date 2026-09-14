@@ -10,30 +10,27 @@
 
     <h1>Tennis Court Scheduler</h1>
 
-    <div class="container">
+    <h2>Add Court Schedule</h2>
 
-        <div class="section">
-            <h2>Select Court</h2>
-            <select id="courtSelect"></select>
-        </div>
+    <label>Team:</label>
+    <select id="teamSelect"></select>
 
-        <div class="section">
-            <h2>Select Team</h2>
-            <select id="teamSelect"></select>
-        </div>
+    <label>Court:</label>
+    <select id="courtSelect"></select>
 
-        <div class="section">
-            <h2>Select Time</h2>
-            <input type="time" id="startTime">
-            <input type="time" id="endTime">
-        </div>
+    <label>Start Time:</label>
+    <input id="startTime" type="text" placeholder="5:30 PM">
 
-        <button id="bookBtn">Book Court</button>
+    <label>End Time:</label>
+    <input id="endTime" type="text" placeholder="6:45 PM">
 
-        <h2>Schedule</h2>
-        <div id="schedule"></div>
+    <button onclick="addSchedule()">Save Schedule</button>
 
-    </div>
+    <h2>All Court Schedules</h2>
+    <div id="scheduleChart"></div>
+
+    <h2>Saved Entries</h2>
+    <div id="savedList"></div>
 
     <script src="app.js"></script>
 </body>

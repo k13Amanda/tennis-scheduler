@@ -1,10 +1,6 @@
-
-
-
 // ----------------------
-// DATA (teams + courts)
+// TEAMS
 // ----------------------
-
 const teams = [
     { id: 1, name: "Bountiful/Viewmont MS Boys" },
     { id: 2, name: "Farmington MS Boys" },
@@ -15,7 +11,6 @@ const teams = [
     { id: 7, name: "Farmington MS Girls" },
     { id: 8, name: "Davis/Layton MS Girls" },
     { id: 9, name: "Northridge/CF/SY MS Girls" },
-
     { id: 10, name: "Bountiful Orange" },
     { id: 11, name: "Farmington/Centerville Orange" },
     { id: 12, name: "Kaysville Orange" },
@@ -23,136 +18,160 @@ const teams = [
     { id: 14, name: "Clearfield Orange" },
     { id: 15, name: "North Ogden Orange" },
     { id: 16, name: "Pleasant View Orange" },
-
     { id: 17, name: "Centerville/Farmington/BO HS" },
     { id: 18, name: "Kaysville/Layton HS" },
     { id: 19, name: "Weber HS" },
     { id: 20, name: "Fremont HS" }
 ];
 
-
-
+// ----------------------
+// COURTS
+// ----------------------
 const courts = [
-    // High Schools → 5pm–8pm
-    { id: 1, name: "Farmington High School", location: "Farmington", open: "5:30 PM", close: "8:00 PM" },
-    { id: 3, name: "Davis High School", location: "Kaysville", open: "5:00 PM", close: "8:00 PM" },
-    { id: 4, name: "Viewmont High School", location: "Bountiful", open: "5:00 PM", close: "8:00 PM" },
-    { id: 5, name: "Northridge High School", location: "Layton", open: "5:00 PM", close: "8:00 PM" },
-    { id: 6, name: "Ogden High School", location: "Ogden", open: "5:00 PM", close: "8:00 PM" },
-    { id: 8, name: "Fremont High School", location: "Plain City", open: "5:00 PM", close: "8:00 PM" },
-    { id: 9, name: "Syracuse High School", location: "Syracuse", open: "5:00 PM", close: "8:00 PM" },
-    { id: 10, name: "Clearfield High School", location: "Clearfield", open: "5:00 PM", close: "8:00 PM" },
-    { id: 11, name: "Weber High School", location: "Pleasant View", open: "5:00 PM", close: "8:00 PM" },
-
-    // Parks → keep normal hours
-    { id: 2, name: "West Muller Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" },
-    { id: 7, name: "North Ogden Park", location: "North Ogden", open: "08:00 AM", close: "10:00 PM" },
-    { id: 12, name: "Five Points Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" },
-    { id: 13, name: "Ranches Park", location: "Farmington", open: "08:00 AM", close: "10:00 PM" },
-    { id: 14, name: "Chapel Park", location: "Layton", open: "08:00 AM", close: "10:00 PM" },
-    { id: 15, name: "Fire House Park", location: "Bountiful", open: "08:00 AM", close: "10:00 PM" }
+    { id: 1, name: "Farmington High School" },
+    { id: 2, name: "West Muller Park" },
+    { id: 3, name: "Davis High School" },
+    { id: 4, name: "Viewmont High School" },
+    { id: 5, name: "Northridge High School" },
+    { id: 6, name: "Ogden High School" },
+    { id: 7, name: "North Ogden Park" },
+    { id: 8, name: "Fremont High School" },
+    { id: 9, name: "Syracuse High School" },
+    { id: 10, name: "Clearfield High School" },
+    { id: 11, name: "Weber High School" },
+    { id: 12, name: "Five Points Park" },
+    { id: 13, name: "Ranches Park" },
+    { id: 14, name: "Chapel Park" },
+    { id: 15, name: "Fire House Park" }
 ];
 
-
-
-
 // ----------------------
-// HELPER FUNCTIONS
+// LOAD SAVED SCHEDULES
 // ----------------------
-
-function toMinutes(t) {
-    const [h, m] = t.split(":").map(Number);
-    return h * 60 + m;
-}
-
-function isOverlapping(courtId, start, end) {
-    return bookings.some(b =>
-        b.courtId === courtId &&
-        !(end <= b.start || start >= b.end)
-    );
-}
-
+let schedules = JSON.parse(localStorage.getItem("schedules")) || [];
 
 // ----------------------
 // LOAD DROPDOWNS
 // ----------------------
-
 function loadDropdowns() {
-    const courtSelect = document.getElementById("courtSelect");
     const teamSelect = document.getElementById("teamSelect");
+    const courtSelect = document.getElementById("courtSelect");
 
-    courts.forEach(c => {
-        courtSelect.innerHTML += `<option value="${c.id}">${c.name} (${c.location})</option>`;
+    teams.forEach(team => {
+        const option = document.createElement("option");
+        option.value = team.id;
+        option.textContent = team.name;
+        teamSelect.appendChild(option);
     });
 
-    teams.forEach(t => {
-        teamSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
-    });
-}
-
-
-// ----------------------
-// BOOKING LOGIC
-// ----------------------
-
-function bookCourt() {
-    const courtId = Number(document.getElementById("courtSelect").value);
-    const teamId = Number(document.getElementById("teamSelect").value);
-    const startTime = document.getElementById("startTime").value;
-    const endTime = document.getElementById("endTime").value;
-
-    const court = courts.find(c => c.id === courtId);
-
-    const start = toMinutes(startTime);
-    const end = toMinutes(endTime);
-
-    if (start < toMinutes(court.open) || end > toMinutes(court.close)) {
-        alert("Court is closed during that time.");
-        return;
-    }
-
-    if (isOverlapping(courtId, start, end)) {
-        alert("Time slot already booked.");
-        return;
-    }
-
-    bookings.push({ courtId, teamId, start, end });
-    renderSchedule();
-    alert("Booking confirmed!");
-}
-
-
-// ----------------------
-// DISPLAY SCHEDULE
-// ----------------------
-
-function renderSchedule() {
-    const scheduleDiv = document.getElementById("schedule");
-    scheduleDiv.innerHTML = "";
-
-    bookings.forEach(b => {
-        const court = courts.find(c => c.id === b.courtId).name;
-        const team = teams.find(t => t.id === b.teamId).name;
-
-        const start = `${Math.floor(b.start / 60)}:${String(b.start % 60).padStart(2, "0")}`;
-        const end = `${Math.floor(b.end / 60)}:${String(b.end % 60).padStart(2, "0")}`;
-
-        scheduleDiv.innerHTML += `
-      <div>
-        <strong>${court}</strong> — ${team}<br>
-        ${start} to ${end}
-        <hr>
-      </div>
-    `;
+    courts.forEach(court => {
+        const option = document.createElement("option");
+        option.value = court.id;
+        option.textContent = court.name;
+        courtSelect.appendChild(option);
     });
 }
 
+// ----------------------
+// ADD SCHEDULE ENTRY
+// ----------------------
+function addSchedule() {
+    const teamId = document.getElementById("teamSelect").value;
+    const courtId = document.getElementById("courtSelect").value;
+    const start = document.getElementById("startTime").value;
+    const end = document.getElementById("endTime").value;
+
+    const teamName = teams.find(t => t.id == teamId).name;
+    const courtName = courts.find(c => c.id == courtId).name;
+
+    schedules.push({ teamName, courtName, start, end });
+
+    localStorage.setItem("schedules", JSON.stringify(schedules));
+
+    renderScheduleChart();
+    renderSavedList();
+}
 
 // ----------------------
-// INIT
+// DELETE ENTRY
 // ----------------------
+function deleteSchedule(index) {
+    schedules.splice(index, 1);
+    localStorage.setItem("schedules", JSON.stringify(schedules));
+    renderScheduleChart();
+    renderSavedList();
+}
 
-document.getElementById("bookBtn").addEventListener("click", bookCourt);
+// ----------------------
+// EDIT ENTRY
+// ----------------------
+function editSchedule(index) {
+    const s = schedules[index];
 
+    document.getElementById("teamSelect").value =
+        teams.find(t => t.name === s.teamName).id;
+
+    document.getElementById("courtSelect").value =
+        courts.find(c => c.name === s.courtName).id;
+
+    document.getElementById("startTime").value = s.start;
+    document.getElementById("endTime").value = s.end;
+
+    schedules.splice(index, 1);
+    localStorage.setItem("schedules", JSON.stringify(schedules));
+
+    renderScheduleChart();
+    renderSavedList();
+}
+
+// ----------------------
+// RENDER SAVED LIST
+// ----------------------
+function renderSavedList() {
+    const list = document.getElementById("savedList");
+    list.innerHTML = "";
+
+    schedules.forEach((s, index) => {
+        list.innerHTML += `
+            <div>
+                ${s.teamName} at ${s.courtName} from ${s.start} to ${s.end}
+                <button onclick="deleteSchedule(${index})">Delete</button>
+                <button onclick="editSchedule(${index})">Edit</button>
+            </div>
+        `;
+    });
+}
+
+// ----------------------
+// RENDER SCHEDULE CHART
+// ----------------------
+function renderScheduleChart() {
+    const chart = document.getElementById("scheduleChart");
+    chart.innerHTML = "";
+
+    const courtsList = [...new Set(schedules.map(s => s.courtName))];
+
+    let html = "<table><tr><th>Court</th><th>Schedule</th></tr>";
+
+    courtsList.forEach(court => {
+        html += `<tr><td>${court}</td><td>`;
+
+        schedules
+            .filter(s => s.courtName === court)
+            .forEach(s => {
+                html += `${s.teamName}: ${s.start} - ${s.end}<br>`;
+            });
+
+        html += "</td></tr>";
+    });
+
+    html += "</table>";
+    chart.innerHTML = html;
+}
+
+// ----------------------
+// INIT PAGE
+// ----------------------
 loadDropdowns();
-renderSchedule();
+renderScheduleChart();
+renderSavedList();

@@ -1,33 +1,41 @@
 body {
     font-family: Arial;
-    background: #f5f5f5;
     padding: 20px;
 }
 
-.container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 500px;
-    margin: auto;
+label {
+    margin-right: 10px;
 }
 
-.section {
-    margin-bottom: 20px;
+input,
+select {
+    margin: 5px;
+    padding: 6px;
 }
 
 button {
-    padding: 10px 20px;
-    background: #2a7ae2;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin: 10px 0;
+    padding: 8px 14px;
     cursor: pointer;
 }
 
-#schedule {
+table {
+    border-collapse: collapse;
     margin-top: 20px;
-    background: #eef;
-    padding: 10px;
-    border-radius: 5px;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #444;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+th {
+    background: #eee;
+}
+
+#savedList div {
+    margin: 6px 0;
 }
